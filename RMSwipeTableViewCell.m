@@ -115,11 +115,13 @@
 -(void)animateContentViewForPoint:(CGPoint)point velocity:(CGPoint)velocity {
     if ((point.x > 0 && self.revealDirection == RMSwipeTableViewCellRevealDirectionLeft) || (point.x < 0 && self.revealDirection == RMSwipeTableViewCellRevealDirectionRight) || self.revealDirection == RMSwipeTableViewCellRevealDirectionBoth) {
         self.contentView.frame = CGRectOffset(self.contentView.bounds, point.x, 0);
+        [self changingContentFrame];
         if ([self.delegate respondsToSelector:@selector(swipeTableViewCell:didSwipeToPoint:velocity:)]) {
             [self.delegate swipeTableViewCell:self didSwipeToPoint:point velocity:velocity];
         }
     } else if ((point.x > 0 && self.revealDirection == RMSwipeTableViewCellRevealDirectionRight) || (point.x < 0 && self.revealDirection == RMSwipeTableViewCellRevealDirectionLeft)) {
         self.contentView.frame = CGRectOffset(self.contentView.bounds, 0, 0);
+        [self changingContentFrame];
     }
 }
 
@@ -139,6 +141,7 @@
                             options:UIViewAnimationOptionCurveEaseIn
                          animations:^{
                              self.contentView.frame = CGRectOffset(self.contentView.bounds, 0 - (point.x * 0.03), 0);
+                             [self changingContentFrame];
                          }
                          completion:^(BOOL finished) {
                              [UIView animateWithDuration:0.1
@@ -146,6 +149,7 @@
                                                  options:UIViewAnimationOptionCurveEaseInOut
                                               animations:^{
                                                   self.contentView.frame = CGRectOffset(self.contentView.bounds, 0 + (point.x * 0.02), 0);
+                                                  [self changingContentFrame];
                                               }
                                               completion:^(BOOL finished) {
                                                   [UIView animateWithDuration:0.1
@@ -153,6 +157,7 @@
                                                                       options:UIViewAnimationOptionCurveEaseOut
                                                                    animations:^{
                                                                        self.contentView.frame = self.contentView.bounds;
+                                                                       [self changingContentFrame];
                                                                    }
                                                                    completion:^(BOOL finished) {
                                                                        
@@ -179,6 +184,7 @@
                             options:self.animationType
                          animations:^{
                              self.contentView.frame = CGRectOffset(self.contentView.bounds, 0, 0);
+                             [self changingContentFrame];
                          }
                          completion:^(BOOL finished) {
                              
@@ -209,6 +215,11 @@
 -(void)cleanupBackView {
     [_backView removeFromSuperview];
     _backView = nil;
+}
+
+-(void)changingContentFrame
+{
+    
 }
 
 @end

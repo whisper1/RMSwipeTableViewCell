@@ -102,6 +102,8 @@ typedef NS_ENUM(NSUInteger, RMSwipeTableViewCellAnimationType) {
 -(UIView*)backView;
 -(void)cleanupBackView;
 
+-(void)changingContentFrame;
+
 @end
 
 @protocol RMSwipeTableViewCellDelegate <NSObject>
